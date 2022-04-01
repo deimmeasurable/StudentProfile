@@ -1,6 +1,11 @@
 package africa.semicolon.studentprofile.data.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Setter;
 
+@AllArgsConstructor
+@Data
 
 public class Student {
     private String firstName;
@@ -10,21 +15,13 @@ public class Student {
     private String phoneNumber;
     private String email;
     private String password;
-    private int matric;
+    @Setter
+    private int matric = 0;
 
+public Student(){
 
-    public Student(String firstName, String lastName, String stateOfOrigin, String middleName, String phoneNumber, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.stateOfOrigin = stateOfOrigin;
-        this.middleName = middleName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.password = password;
-    }
-    public Student(){
+}
 
-    }
 
     public String getFirstName() {
         return firstName;
@@ -81,6 +78,7 @@ public class Student {
         return password;
     }
 
+
     @Override
     public String toString() {
         return "Student{" +
@@ -91,9 +89,9 @@ public class Student {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", matric=" + matric +
                 '}';
     }
-
 
     public int getMatric() {
         return matric;

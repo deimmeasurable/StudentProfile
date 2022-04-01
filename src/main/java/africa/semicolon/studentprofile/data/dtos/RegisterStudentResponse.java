@@ -1,4 +1,5 @@
 package africa.semicolon.studentprofile.data.dtos;
+@lombok.Data
 
 public class RegisterStudentResponse {
     private String userName;

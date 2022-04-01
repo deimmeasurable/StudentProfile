@@ -1,12 +1,14 @@
 package africa.semicolon.studentprofile.service;
 
-import africa.semicolon.studentprofile.data.dtos.RegisterContactRequest;
+import africa.semicolon.studentprofile.data.dtos.RegisterStudentRequest;
+import africa.semicolon.studentprofile.data.dtos.Responses;
+import africa.semicolon.studentprofile.data.dtos.StudentProfileResponse;
+import africa.semicolon.studentprofile.data.model.Student;
 import africa.semicolon.studentprofile.exception.RegisterStudentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StudentServiceImplTest {
  private StudentService studentService;
@@ -18,7 +20,7 @@ class StudentServiceImplTest {
     @Test
     void testStudentCanBeAddedToRepository(){
         //given
-        RegisterContactRequest registerForm = new RegisterContactRequest();
+        RegisterStudentRequest registerForm = new RegisterStudentRequest();
         registerForm.setFirstName("dele");
         registerForm.setLastName("yusuf");
         registerForm.setMiddleName("ifeanyi");
@@ -39,7 +41,7 @@ class StudentServiceImplTest {
     }
     @Test
     void testThatMoreStudentCanRegister(){
-        RegisterContactRequest registerForm= new RegisterContactRequest();
+        RegisterStudentRequest registerForm= new RegisterStudentRequest();
         registerForm.setFirstName("dele");
         registerForm.setLastName("yusuf");
         registerForm.setMiddleName("ifeanyi");
@@ -48,11 +50,11 @@ class StudentServiceImplTest {
         registerForm.setPassword("tit789");
         registerForm.setStateOfOrigin("kwara");
 
-//        registerForm.
 
-        //when
 
-        RegisterContactRequest registerForm2 = new RegisterContactRequest();
+
+
+        RegisterStudentRequest registerForm2 = new RegisterStudentRequest();
         registerForm2.setFirstName("tunji");
         registerForm2.setLastName("tolani");
         registerForm2.setMiddleName("kelani");
@@ -74,7 +76,7 @@ class StudentServiceImplTest {
     @Test
     void testThatThereIsNoduplicateRegistration(){
 
-       RegisterContactRequest registerForm= new RegisterContactRequest();
+       RegisterStudentRequest registerForm= new RegisterStudentRequest();
         registerForm.setFirstName("dele");
         registerForm.setLastName("yusuf");
         registerForm.setMiddleName("ifeanyi");
@@ -84,7 +86,7 @@ class StudentServiceImplTest {
         registerForm.setStateOfOrigin("kwara");
         studentService.register(registerForm);
 
-        RegisterContactRequest reg= new RegisterContactRequest();
+        RegisterStudentRequest reg= new RegisterStudentRequest();
         reg.setFirstName("dele");
         reg.setLastName("yusuf");
         reg.setMiddleName("ifeanyi");
@@ -97,22 +99,55 @@ class StudentServiceImplTest {
         assertThrows(RegisterStudentException.class,()->studentService.register(reg));
 
     }
-    @Test
-    void studentCanBeDeletedFromRepository(){
-        RegisterContactRequest registerForm2 = new RegisterContactRequest();
-        registerForm2.setFirstName("tunji");
-        registerForm2.setLastName("tolani");
-        registerForm2.setMiddleName("kelani");
-        registerForm2.setPhoneNumber("09865743");
-        registerForm2.setEmail("tolumilade56@gmail.com");
-        registerForm2.setPassword("yitrt78");
-        registerForm2.setStateOfOrigin("uyo");
+@Test
+    void testThatStudentCanCheckTheirProfile(){
+    RegisterStudentRequest registerForm = new RegisterStudentRequest();
+    registerForm.setFirstName("tunji");
+    registerForm.setLastName("tolani");
+    registerForm.setMiddleName("kelani");
+    registerForm.setPhoneNumber("09865743");
+    registerForm.setEmail("tolumilade56@gmail.com");
+    registerForm.setPassword("yitrt78");
+    registerForm.setStateOfOrigin("uyo");
+    studentService.register(registerForm);
 
-       studentService.canCheckProfile(registerForm2);
+    RegisterStudentRequest registerForm2 = new RegisterStudentRequest();
+    registerForm2.setFirstName("tunji");
+    registerForm2.setLastName("tolani");
+    registerForm2.setMiddleName("kelani");
+    registerForm2.setPhoneNumber("09865743");
+    registerForm2.setEmail("tolumilade56@gmal.com");
+    registerForm2.setPassword("yitrt78");
+    registerForm2.setStateOfOrigin("uyo");
+    studentService.register(registerForm2);
 
-        assertEquals(1,studentService.getRepository().count());
-    }
+    StudentProfileResponse response = studentService.canCheckProfile(1);
+//    StudentProfileResponse response2 = studentService.canCheckProfile(2);
+  System.out.println("response "+response.toString());
+   assertFalse(response.getStudent().getEmail().isEmpty());
+    assertEquals(1,registerForm.getMatric());
+//    assertEquals(2,registerForm2.getMatric());
 
+}
+@Test
+    void testThatStudentCanResetPassword(){
+
+    RegisterStudentRequest registerForm2 = new RegisterStudentRequest();
+    registerForm2.setFirstName("tunji");
+    registerForm2.setLastName("tolani");
+    registerForm2.setMiddleName("kelani");
+    registerForm2.setPhoneNumber("09865743");
+    registerForm2.setEmail("tolumilade56@gmal.com");
+    registerForm2.setPassword("yitrt78");
+    registerForm2.setStateOfOrigin("uyo");
+    studentService.register(registerForm2);
+
+   Responses responses = studentService.studentCanResetPassWord("tolumilade56@gmal.com","yitrt7890");
+   Student student = studentService.getRepository().findStudentByEmail("tolumilade56@gmal.com");
+
+   assertEquals("yitrt7890",student.getPassword());
+    assertEquals("Password update successful",responses.getResponse());
+}
 
 
 }

@@ -1,6 +1,8 @@
 package africa.semicolon.studentprofile.data.dtos;
-
-public class RegisterContactRequest {
+@lombok.Data
+@lombok.Getter
+@lombok.Setter
+public class RegisterStudentRequest {
     private String firstName;
     private String lastName;
     private String stateOfOrigin;
@@ -8,8 +10,9 @@ public class RegisterContactRequest {
     private String phoneNumber;
     private String email;
     private String password;
+    private int matric;
 
-    public RegisterContactRequest() {
+    public RegisterStudentRequest() {
 
     }
 
@@ -74,7 +77,7 @@ public class RegisterContactRequest {
 
     @Override
     public String toString() {
-        return "RegisterContactRequest{" +
+        return "RegisterStudentRequest{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", stateOfOrigin='" + stateOfOrigin + '\'' +
@@ -82,6 +85,11 @@ public class RegisterContactRequest {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", matric=" + matric +
                 '}';
+    }
+
+    public int getMatric() {
+        return matric+=1 ;
     }
 }

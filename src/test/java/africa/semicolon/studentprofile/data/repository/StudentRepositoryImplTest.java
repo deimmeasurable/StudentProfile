@@ -166,7 +166,24 @@ private StudentRepository studentRepository;
         assertEquals(2,studentRepository.count());
     }
 
+@Test
+    void canFindStudentByMatric(){
+    Student student = new Student();
+    student.setFirstName("ola");
+    student.setLastName("seyi");
+    student.setMiddleName("oyin");
+    student.setEmail("seyi456@gmail.com");
+    student.setStateOfOrigin("oyo");
+    student.setPhoneNumber("0705643");
+    student.setPassword("rest456");
+   studentRepository.save(student);
 
+    Student s =studentRepository.findByMatric(1);
+    System.out.println(s);
+
+assertEquals(1,student.getMatric());
+
+}
 
 
 
