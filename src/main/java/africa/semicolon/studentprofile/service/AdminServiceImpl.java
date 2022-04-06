@@ -7,14 +7,17 @@ import africa.semicolon.studentprofile.data.dtos.StudentProfileResponse;
 import africa.semicolon.studentprofile.data.model.Student;
 import africa.semicolon.studentprofile.data.repository.StudentRepository;
 import africa.semicolon.studentprofile.data.repository.StudentRepositoryImpl;
+import africa.semicolon.studentprofile.exception.RegisterStudentException;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class AdminServiceImpl implements AdminService {
     private final StudentRepository repository=new StudentRepositoryImpl();
 
 
     @Override
     public RegisterStudentResponse register(RegisterStudentRequest registerForm) {
+
        Student student =new Student();
             student.setFirstName(registerForm.getFirstName());
             student.setLastName(registerForm.getLastName());
@@ -23,11 +26,26 @@ public class AdminServiceImpl implements AdminService {
             student.setMatric(registerForm.getMatric());
             student.setPhoneNumber(registerForm.getPhoneNumber());
             student.setStateOfOrigin(registerForm.getStateOfOrigin());
-
-         RegisterStudentResponse response = new RegisterStudentResponse();
-
+            student.setPassword(registerForm.getPassword());
+        if (checkIfEmailAlreadyExist(registerForm.getEmail(), registerForm.getPhoneNumber()))throw  new RegisterStudentException("email already exist");
         repository.save(student);
+         RegisterStudentResponse response = new RegisterStudentResponse();
+            response.setUserName(response.getUserName());
+            response.setEmail(response.getEmail());
+            response.setStateOfOrigin(response.getStateOfOrigin());
+            response.setPassword(response.getPassword());
+            response.setFullName(response.getFullName());
+
+
+
         return response;
+    }
+
+    private boolean checkIfEmailAlreadyExist(String email, String phoneNumber) {
+        if(repository.findStudentByEmail(email)!=null && repository.findStudentByPhoneNumber(phoneNumber)!=null){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -52,17 +70,17 @@ public class AdminServiceImpl implements AdminService {
 
             }
 
-        }
+      }
 
 
-
-    @Override
-    public int count() {
-        return repository.count();
-    }
-
-
-
+//
+//    @Override
+//    public int count() {
+//        return repository.count();
+//    }
+//
+//
+//
 }
 
 

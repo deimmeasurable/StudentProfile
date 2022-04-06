@@ -14,5 +14,5 @@ public interface StudentService {
     StudentProfileResponse canCheckProfile(int matric);
     Responses studentCanResetPassWord(String email, String passWord);
 
-//    void delete(RegisterContactRequest registerForm);
+
 }

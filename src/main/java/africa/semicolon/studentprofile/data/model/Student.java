@@ -17,6 +17,7 @@ public class Student {
     private String password;
     @Setter
     private int matric = 0;
+    private int Token;
 
 public Student(){
 

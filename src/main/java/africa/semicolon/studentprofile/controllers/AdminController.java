@@ -9,19 +9,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@SuppressWarnings("rawtypes")
+
 @RestController
 @RequestMapping("/student")
 public class AdminController {
-//    @Autowired
+    @Autowired
     private AdminService adminService;
-//
+
 //@DeleteMapping("/{matric}")
-//    public ResponseEntity<?> deleteStudent(@PathVariable int matric){
-//    try{
-//        return new  ResponseEntity<>(adminService.deleteByMatricNumber(matric), HttpStatus.OK);
-//    }catch (Exception e){
-//        return  new ResponseEntity<>(new ApiResponse(false,e.getMessage()),HttpStatus.NOT_FOUND);
-//    }
-//}
+////    public ResponseEntity<?> deleteStudent(@PathVariable int matric){
+////    try{
+////        return new  ResponseEntity<>(adminService.deleteByMatricNumber(matric), HttpStatus.OK);
+////    }catch (Exception e){
+////        return  new ResponseEntity<>(new ApiResponse(false,e.getMessage()),HttpStatus.NOT_FOUND);
+////    }
+////}
+////}
 }

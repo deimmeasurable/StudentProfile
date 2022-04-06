@@ -1,11 +1,13 @@
 package africa.semicolon.studentprofile.data.repository;
 
 import africa.semicolon.studentprofile.data.model.Student;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-@org.springframework.stereotype.Service
+@Service
 public class StudentRepositoryImpl implements StudentRepository{
 //    Logger logger = Logger.getLogger(StudentRepository.class.getName());
 List<Student> db = new ArrayList<>();
@@ -37,8 +39,9 @@ List<Student> db = new ArrayList<>();
 
     @Override
     public Student findStudentByEmail(String email) {
+        email=email.toLowerCase(Locale.ROOT);
         for (Student student:db) {
-            if(email.equalsIgnoreCase(student.getEmail())){
+            if(email.equals(student.getEmail())){
                 return student;
 
             }
